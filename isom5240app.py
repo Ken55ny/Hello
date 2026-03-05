@@ -25,7 +25,7 @@ def text2story(text):
         "You are a friendly storyteller for young children.\n"
         "Write a simple, warm and positive story in English for a child aged 3 to 10.\n"
         "The story should be between 50 and 100 words.\n"
-        f"The story is about: {caption}\n\n"
+        f"The story is about: {text}\n\n"
         "Story:\n"
     )
 

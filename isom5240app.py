@@ -13,7 +13,7 @@ def img2text(url):
 
 # text2story
 def text2story(text):
-    pipe = pipeline("text-generation", model="pranavpsv/genre-story-generator-v2")
+    pipe = pipeline("text-generation", model="coffeeee/nsfw-story-generator2")#pranavpsv/genre-story-generator-v2
     story_text = pipe(text)[0]['generated_text']
     return story_text
 

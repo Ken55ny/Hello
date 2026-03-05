@@ -43,11 +43,6 @@ def text2story(caption):
     # 4. 去掉前面的 prompt，只保留故事正文
     story_text = full_text[len(prompt):]
 
-    # 5. （可选）再做一次“字数截断”，确保不超过 100 词
-    words = story_text.split()
-    if len(words) > 100:
-        story_text = " ".join(words[:100])
-
     return story_text
 
 

@@ -17,7 +17,7 @@ def text2story(caption):
     # 1. 加载专门给小朋友讲故事的模型
     pipe = pipeline(
         "text-generation",
-        model="bartowski/Young-Children-Storyteller-Mistral-7B-GGUF"
+        model="pranavpsv/gpt2-genre-story-generator"
     )
 
     # 2. 自己设计 prompt，把年龄和字数要求写进去

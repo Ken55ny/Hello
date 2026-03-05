@@ -14,7 +14,32 @@ def img2text(url):
 # text2story
 def text2story(text):
     pipe = pipeline("text-generation", model="bartowski/Young-Children-Storyteller-Mistral-7B-GGUF")#pranavpsv/genre-story-generator-v2
-    story_text = pipe(text)[0]['generated_text']
+    prompt = (
+        "You are a friendly storyteller for young children.\n"
+        "Write a simple, warm and positive story in English for a child aged 3 to 10.\n"
+        "The story should be between 50 and 100 words.\n"
+        f"The story is about: {caption}\n\n"
+        "Story:\n"
+    )
+    # 3. 用参数控制“生成的 token 数”，间接控制字数
+    outputs = pipe(
+        prompt,
+        max_new_tokens=150,    # 大约能覆盖到 50–100 词
+        do_sample=True,
+        top_p=0.9,
+        temperature=0.8
+    )
+
+    full_text = outputs[0]["generated_text"]
+
+    # 4. 去掉前面的 prompt，只保留故事正文
+    story_text = full_text[len(prompt):]
+
+    # 5. （可选）再做一次“字数截断”，确保不超过 100 词
+    words = story_text.split()
+    if len(words) > 100:
+        story_text = " ".join(words[:100])
+
     return story_text
 
 # text2audio

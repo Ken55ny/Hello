@@ -12,15 +12,12 @@ def img2text(url):
     return text
 
 # text2story
-# text2story
 def text2story(text):
-    # 1. 加载专门给小朋友讲故事的模型
     pipe = pipeline(
         "text-generation",
         model="pranavpsv/gpt2-genre-story-generator"
     )
 
-    # 2. 自己设计 prompt，把年龄和字数要求写进去
     prompt = (
         "You are a friendly storyteller for young children.\n"
         "Write a simple, warm and positive story in English for a child aged 3 to 10.\n"
@@ -29,22 +26,25 @@ def text2story(text):
         "Story:\n"
     )
 
-    # 3. 用参数控制“生成的 token 数”，间接控制字数
     outputs = pipe(
         prompt,
-        max_new_tokens=100,    # 大约能覆盖到 50–100 词
+        max_new_tokens=120,    # 稍微放宽一点
         do_sample=True,
         top_p=0.9,
         temperature=0.8
     )
 
     full_text = outputs[0]["generated_text"]
+    story_text = full_text[len(prompt):]  # 去掉 prompt
 
-    # 4. 去掉前面的 prompt，只保留故事正文
-    story_text = full_text[len(prompt):]
+    # 严格控制在 50–100 词之间
+    words = story_text.split()
+    # 先截断到 100 词
+    if len(words) > 100:
+        words = words[:100]
+    story_text = " ".join(words)
 
     return story_text
-
 
 # text2audio
 def text2audio(story_text):

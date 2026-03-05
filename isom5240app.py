@@ -13,7 +13,7 @@ def img2text(url):
 
 # text2story
 # text2story
-def text2story(caption):
+def text2story(text):
     # 1. 加载专门给小朋友讲故事的模型
     pipe = pipeline(
         "text-generation",
@@ -32,7 +32,7 @@ def text2story(caption):
     # 3. 用参数控制“生成的 token 数”，间接控制字数
     outputs = pipe(
         prompt,
-        max_new_tokens=150,    # 大约能覆盖到 50–100 词
+        max_new_tokens=100,    # 大约能覆盖到 50–100 词
         do_sample=True,
         top_p=0.9,
         temperature=0.8
